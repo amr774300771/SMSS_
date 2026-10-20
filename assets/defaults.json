@@ -1,0 +1,13 @@
+{
+  "packages.json": "{\"schemaVersion\":1,\"packages\":[{\"id\":\"500\",\"price\":500,\"label\":\"500\",\"keywords\":[\"500\",\"خمس\"]},{\"id\":\"300\",\"price\":300,\"label\":\"300\",\"keywords\":[\"300\",\"ثلاثمائة\",\"ثلاث مائة\",\"ثلاثميه\",\"ثلاثمية\"]},{\"id\":\"3000\",\"price\":3000,\"label\":\"3000\",\"keywords\":[\"3000\",\"ثلاثة آلاف\",\"ثلاث آلاف\",\"ثلاثه الاف\",\"ثلاث الاف\",\"تلاته الاف\",\"تلات آلاف\"]},{\"id\":\"200\",\"price\":200,\"label\":\"200\",\"keywords\":[\"200\",\"مئتان\",\"مئتين\",\"مائتان\",\"مائتين\"]}]}",
+  "permissions.json": "{\"global\":{\"allowAllClients\":true,\"onlyTrusted\":false,\"allowedPackages\":[\"500\",\"300\",\"3000\",\"200\"],\"paymentMethods\":[\"cash\",\"credit\"],\"maxDebt\":50000,\"maxDailyTransactions\":10,\"maxDailyAmount\":100000,\"timeRestriction\":{\"enabled\":false,\"from\":\"08:00\",\"to\":\"22:00\"},\"blockedClients\":[]},\"clients\":[]}",
+  "trigger_config.json": "{\"triggerEnabled\":true,\"lastRun\":null,\"processedCount\":0,\"totalSalesCount\":0,\"errorCount\":0}",
+  "trusted_clients.json": "{\"filterEnabled\":false,\"mode\":\"all\",\"clients\":[]}",
+  "transactions.json": "{\"schemaVersion\":1,\"transactions\":[]}",
+  "cards_500.txt": "",
+  "cards_300.txt": "",
+  "cards_3000.txt": "",
+  "cards_200.txt": "",
+  "debts.txt": "",
+  "sales.log": ""
+}

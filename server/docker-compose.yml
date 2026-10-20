@@ -1,0 +1,24 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: qaidi
+      POSTGRES_PASSWORD: qaidi
+      POSTGRES_DB: qaidi
+    ports:
+      - "5432:5432"
+    volumes:
+      - qaidi_pg:/var/lib/postgresql/data
+  api:
+    image: node:22-alpine
+    working_dir: /app
+    env_file: .env
+    volumes:
+      - .:/app
+    ports:
+      - "8080:8080"
+    command: sh -c "npm install && npm run start"
+    depends_on:
+      - postgres
+volumes:
+  qaidi_pg:
