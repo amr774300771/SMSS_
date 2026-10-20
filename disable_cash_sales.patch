@@ -1,0 +1,108 @@
+diff --git a/lib/main.dart b/lib/main.dart
+--- a/lib/main.dart
++++ b/lib/main.dart
+@@ -649,3 +649,0 @@
+-    final todayCash = todaySales
+-        .where((s) => '${s['paymentMethod'] ?? 'cash'}' == 'cash')
+-        .fold<num>(0, (a, s) => a + reportAmount(s));
+@@ -822,2 +819,0 @@
+-                              _dailyMetric('نقدي', _money(todayCash),
+-                                  Icons.payments_outlined, emerald),
+@@ -1541,1 +1536,1 @@
+-  String paymentMethod = 'cash';
++  static const String paymentMethod = 'credit';
+@@ -1679,12 +1674,0 @@
+-                    DropdownButtonFormField<String>(
+-                      initialValue: paymentMethod,
+-                      decoration:
+-                          const InputDecoration(labelText: 'طريقة الدفع'),
+-                      items: const [
+-                        DropdownMenuItem(value: 'cash', child: Text('نقداً')),
+-                        DropdownMenuItem(
+-                            value: 'credit', child: Text('آجل / على الحساب')),
+-                      ],
+-                      onChanged: (v) =>
+-                          setState(() => paymentMethod = v ?? 'cash'),
+-                    ),
+@@ -4369,3 +4352,1 @@
+-      final globalMethods = _list(global['paymentMethods']).isEmpty
+-          ? <String>['cash', 'credit']
+-          : _list(global['paymentMethods']).map((entry) => '$entry').toList();
++      final globalMethods = <String>['credit'];
+@@ -4492,3 +4473,1 @@
+-          'paymentMethods': _list(global['paymentMethods']).isEmpty
+-              ? ['cash', 'credit']
+-              : _list(global['paymentMethods']),
++          'paymentMethods': ['credit'],
+@@ -4759,1 +4738,1 @@
+-    global.putIfAbsent('paymentMethods', () => ['cash', 'credit']);
++    global['paymentMethods'] = ['credit'];
+@@ -4777,1 +4756,0 @@
+-    final methods = _list(g['paymentMethods']).map((e) => '$e').toSet();
+@@ -4842,2 +4820,0 @@
+-                          _templateChip('نقدي فقط', Icons.payments_outlined,
+-                              () => _applyTemplate('cash')),
+@@ -4873,13 +4849,9 @@
+-                const Text('طرق الدفع',
+-                    style: TextStyle(fontWeight: FontWeight.w800)),
+-                const SizedBox(height: 8),
+-                Wrap(spacing: 8, children: [
+-                  FilterChip(
+-                      label: const Text('نقداً'),
+-                      selected: methods.contains('cash'),
+-                      onSelected: (v) => _toggleMethod('cash', v)),
+-                  FilterChip(
+-                      label: const Text('آجل / على الحساب'),
+-                      selected: methods.contains('credit'),
+-                      onSelected: (v) => _toggleMethod('credit', v)),
+-                ]),
++                const Text('طريقة البيع: آجل / على الحساب',
++                    style: TextStyle(fontWeight: FontWeight.w800)),
++                const SizedBox(height: 8),
++                const ListTile(
++                  contentPadding: EdgeInsets.zero,
++                  leading: Icon(Icons.account_balance_wallet_outlined),
++                  title: Text('البيع النقدي معطّل'),
++                  subtitle: Text('تُسجّل المبيعات الجديدة على حساب العميل.'),
++                ),
+@@ -5127,6 +5099,2 @@
+-      g['paymentMethods'] = type == 'cash' ? ['cash'] : ['cash', 'credit'];
+-      g['maxDebt'] = type == 'cash'
+-          ? 0
+-          : type == 'credit'
+-              ? 15000
+-              : 50000;
++      g['paymentMethods'] = ['credit'];
++      g['maxDebt'] = type == 'credit' ? 15000 : 50000;
+@@ -5145,1 +5113,1 @@
+-      g['paymentMethods'] = ['cash', 'credit'];
++      g['paymentMethods'] = ['credit'];
+@@ -5277,3 +5245,1 @@
+-  final defaultMethods = configuredGlobalMethods.isEmpty
+-      ? <dynamic>['cash', 'credit']
+-      : configuredGlobalMethods;
++  final defaultMethods = <dynamic>['credit'];
+@@ -5323,6 +5289,1 @@
+-  final configuredClientMethods = _list(client['paymentMethods']);
+-  final methods = (configuredClientMethods.isEmpty
+-          ? defaultMethods
+-          : configuredClientMethods)
+-      .map((v) => '$v')
+-      .toSet();
++  final methods = <String>{'credit'};
+@@ -5480,10 +5441,5 @@
+-                ...['cash', 'credit'].map((method) => CheckboxListTile(
+-                    value: methods.contains(method),
+-                    onChanged: (v) => set(() {
+-                          if (v == true) {
+-                            methods.add(method);
+-                          } else {
+-                            methods.remove(method);
+-                          }
+-                        }),
+-                    title: Text(method == 'cash' ? 'نقداً' : 'آجل'))),
++                const CheckboxListTile(
++                    value: true,
++                    onChanged: null,
++                    title: Text('آجل / على الحساب'),
++                    subtitle: Text('البيع النقدي غير متاح في هذا النظام.')),

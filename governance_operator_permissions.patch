@@ -1,0 +1,34 @@
+diff --git a/lib/governance.dart b/lib/governance.dart
+--- a/lib/governance.dart
++++ b/lib/governance.dart
+@@ -89,6 +89,23 @@
+     await record('تعديل صلاحيات الأدوار');
+   }
+ 
++  /// Per-account permission overrides keyed by stable authenticated user ID.
++  Map<String, dynamic> get operatorPermissionOverrides {
++    final raw = box.get('operatorPermissionOverrides',
++        defaultValue: const <String, dynamic>{});
++    if (raw is! Map) return <String, dynamic>{};
++    return Map<String, dynamic>.from(raw);
++  }
++
++  Future<void> saveOperatorPermissionOverrides(
++      Map<String, dynamic> value,
++      {String actor = 'المستخدم المحلي'}) async {
++    await ensureReady();
++    await box.put('operatorPermissionOverrides', value);
++    await record('تحديث صلاحيات المشغّلين',
++        details: 'عدد الحسابات: ${value.length}', actor: actor);
++  }
++
+   Map<String, dynamic> get roles => Map<String, dynamic>.from(
+         (box.get('roles', defaultValue: const <String, dynamic>{}) as Map),
+       );
+@@ -99,5 +116,6 @@
+         'scheduledBroadcasts': scheduledBroadcasts,
+         'autoBackup': autoBackup,
+         'roles': roles,
++        'operatorPermissionOverrides': operatorPermissionOverrides,
+       });
+ }

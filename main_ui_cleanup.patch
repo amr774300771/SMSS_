@@ -1,0 +1,64 @@
+diff --git a/lib/main.dart b/lib/main.dart
+--- a/lib/main.dart
++++ b/lib/main.dart
+@@ -650,8 +650,0 @@ class HomePage extends StatelessWidget {
+-    final readinessChecks = <MapEntry<String, bool>>[
+-      MapEntry('محرك استقبال الرسائل', trigger['triggerEnabled'] == true),
+-      MapEntry('قاعدة البيانات المحلية', data.isNotEmpty),
+-      MapEntry('المخزون محمّل', totalCards > 0),
+-      MapEntry(
+-          'قناة إرسال SMS', defaultTargetPlatform == TargetPlatform.android),
+-    ];
+-    final readyCount = readinessChecks.where((check) => check.value).length;
+@@ -704,28 +696,0 @@ class HomePage extends StatelessWidget {
+-              const SizedBox(height: 18),
+-              QaidiSectionHeader(
+-                title: 'جاهزية النظام',
+-                subtitle: 'حالة المكونات المحلية والخدمات الأساسية',
+-                action: Text('$readyCount/${readinessChecks.length}',
+-                    style: const TextStyle(
+-                        color: emerald, fontWeight: FontWeight.bold)),
+-              ),
+-              const SizedBox(height: 8),
+-              Card(
+-                child: ExpansionTile(
+-                  title: const Text('تفاصيل الجاهزية'),
+-                  subtitle: Text(
+-                      'اضغط لعرض حالة المكونات المحلية • $readyCount/${readinessChecks.length}'),
+-                  leading: const Icon(Icons.health_and_safety_outlined),
+-                  children: [
+-                    Padding(
+-                      padding:
+-                          const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 12),
+-                      child: Column(
+-                        children: readinessChecks
+-                            .map((check) => _checkRow(check.key, check.value))
+-                            .toList(),
+-                      ),
+-                    ),
+-                  ],
+-                ),
+-              ),
+@@ -3048,7 +3012,12 @@   Future<void> _openAccount(BuildContext c, String phone) async {
+     final name = _clientDisplayName(phone, widget.data);
+     Map<String, dynamic> freshData = widget.data;
+     try {
+-      freshData = await NativeApi.instance.refresh();
++      final refreshed = await NativeApi.instance.refresh();
++      if (refreshed.isNotEmpty) {
++        freshData = refreshed;
++      } else if (NativeApi.instance.snapshot.isNotEmpty) {
++        freshData = NativeApi.instance.snapshot;
++      }
+     } catch (_) {
+       if (NativeApi.instance.snapshot.isNotEmpty) {
+         freshData = NativeApi.instance.snapshot;
+@@ -3060,5 +3029,7 @@   Future<void> _openAccount(BuildContext c, String phone) async {
+                 builder: (_) => SaleSheet(
+-                    data: widget.data,
++                    data: NativeApi.instance.snapshot.isNotEmpty
++                        ? NativeApi.instance.snapshot
++                        : freshData,
+                     onDone: widget.onRefresh,
+                     initialPhone: phone,
+                     initialName: name),

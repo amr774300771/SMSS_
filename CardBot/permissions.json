@@ -1,1 +1,0 @@
-{"global":{"allowAllClients":true,"onlyTrusted":false,"allowedPackages":["500","300","3000","200"],"paymentMethods":["cash","credit"],"maxDebt":50000,"maxDailyTransactions":10,"maxDailyAmount":100000,"timeRestriction":{"enabled":false,"from":"08:00","to":"22:00"},"blockedClients":[]},"clients":[]}
